@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="container">
+        <div class="container" id="container">
             <form id="form" class="form">
               <h2>Sign Up </h2>
               <div class="form-control">
@@ -32,7 +32,14 @@
                 <input type="password" id="password2" placeholder="Confirm password" />
                 <small>Error message</small>
               </div>
-              <button>Submit</button>
+
+              <div id="terms">
+                <input type="checkbox" id="checkbox">
+                <label id="check" for="checkbox">I agree to the <a href="#">Terms and Conditions</a></label>
+                
+              </div>
+
+              <button disabled>Submit</button>
             </form>
           </div>
         

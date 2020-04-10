@@ -3,7 +3,9 @@ const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const password2 = document.getElementById('password2');
-
+const formContainer = document.getElementById('container');
+const checkBox = document.getElementById('checkbox');
+const submitBtn = document.querySelector('button');
 
 //show input error message
 function showError(input, message){
@@ -11,12 +13,25 @@ const formControl = input.parentElement;
 formControl.className = 'form-control error'; //used to add red box around input that has an error
 const small = formControl.querySelector('small');
 small.innerText = message;
+
+//add form shake error
+formContainer.classList.add('form-error');
+
+//remove error class after 0.5s to allow for repeated shake
+setTimeout(function(){
+formContainer.classList.remove('form-error');
+}, 500);
+
 }
 
 //show input success message
 function showSuccess(input){
 const formControl = input.parentElement;
 formControl.className = 'form-control success';
+
+//remove form shake error
+formContainer.classList.remove('form-error');
+
 }
 
 //check email is valid
@@ -65,43 +80,30 @@ function checkLength(input, min, max){
     }
 }
 
+function disableBtn(){
+    if (checkBox.checked){
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+}
+
 //Event listeneres
+
+// SUBMIT form
 form.addEventListener('submit', function(e){
 e.preventDefault();
-
 
 checkRequired([username, email, password, password2]);
 checkLength(username, 3, 15); //input, min, max
 checkLength(password, 6, 25);
 checkEmail(email);
 checkPasswordsMatch(password, password2);
-/*
 
-        if(username.value === ""){
-            showError(username, 'Username is required');
-        } else {
-            showSuccess(username);
-            }
 
-        if(email.value === ""){
-            showError(email, 'Email is required');
-            }  else if (!isValidEmail(email.value)){
-                showError(email, 'Email is not valid');
-            }else {
-                showSuccess(email);
-            }
-
-        if(password.value === ""){
-            showError(password, 'Password is required');
-            } else {
-                showSuccess(password);
-            }
-
-        if(password2.value === ""){
-            showError(password2, 'Confirm password');
-            } else {
-                showSuccess(password2);
-            }
-*/
 })
+
+
+// Disable submit button via checkbox
+checkBox.addEventListener('change', disableBtn);
 
