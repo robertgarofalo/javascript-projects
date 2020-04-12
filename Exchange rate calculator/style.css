@@ -1,5 +1,6 @@
 :root {
-    --primary--color: #5fbaa7;
+    --primary--color: #0061b0;
+    --delete--color: #d9534f;
 }
 
 * {
@@ -13,13 +14,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    margin: 0;
+    margin: 50px 0;
     padding: 20px;
 }
 
 h1 {
     color: var(--primary--color);
+    margin-top: 35px;
 }
 
 p {
@@ -82,4 +83,72 @@ select:focus, input:focus, button:focus {
 }
 }
 
+.live-rates-container {
+    
+    width: 80%; 
+    text-align: center;
+}
 
+.live-rates-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;  
+    margin-top: 20px;
+    margin-bottom: -50px;
+}
+
+#first-row {
+  margin-bottom: -90px;
+}
+
+.main {
+    padding-top: 50px;
+}
+
+.main img {
+    width: 50%;
+}
+
+.border-right {
+    width: 1px;
+    height: 250px;
+    background-color: grey;
+}
+
+h3 {
+    color: var(--primary--color);
+}
+
+.main-x-rate {
+    color: var(--primary--color);
+}
+
+img {
+    width: 50%;
+}
+
+
+/* add new currency rows */
+
+.btn.delete-btn {
+ background-color: var(--delete--color);
+ border: 1px solid var(--delete--color);
+}
+
+.add-new-currency {
+    margin-top: 100px;
+}
+
+.img-invisible img.hidden {
+visibility: hidden;
+}
+
+.live-rate h2.hidden {
+    display: none;
+}
+
+.img-invisible .live-rate.main {
+    padding-top: 72px;
+}
