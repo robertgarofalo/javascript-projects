@@ -39,7 +39,6 @@ function calculate() {
 //Show live exchange rates
 function showLiveRates() {
 
-
     fetch(`https://api.exchangerate-api.com/v4/latest/${mainCurrency}`)
         .then(res => res.json())
         .then(data => {
@@ -60,7 +59,7 @@ function showLiveRates() {
         });
 }
 
-function newCurrencyRow() {
+function newCurrencyRow(e) {
 
     exchangeRate = addNewCurrency.value;
     addToContainer = document.getElementById('add-to');
@@ -69,11 +68,11 @@ function newCurrencyRow() {
         .then(res => res.json())
         .then(data => {
             console.log(data.base);
-            // if theyre the same, make it 1
-            if (data.base === 'USD') {
-                rate = '1';
-                console.log(rate);
-            };
+            console.log('e.target.parent: ', e.target.parentNode);
+            //console.log(e.target.previousElementSibling.lastChild.firstElementChild.children);
+            let classObj = e.target.previousElementSibling.lastChild.firstElementChild.children;
+            console.log(e.target.previousElementSibling.lastChild.firstElementChild.firstElementChild);
+
         })
 
     const newCurrencyRow = ` 
@@ -86,27 +85,27 @@ function newCurrencyRow() {
 
     </div>
     <div class="border-right"></div>
-    <div class="live-rate">
+    <div class="live-rate new">
         <img class="flag hidden" src="img/usd.svg" alt="flag">
         <h2 value="USD">USD</h2>
         <h3 class="live-x-rate">0.3</h3>
     </div>
-    <div class="live-rate">
+    <div class="live-rate new">
         <img class="flag hidden" src="img/eur.svg" alt="flag">
         <h2 value="EUR">EUR</h2>
         <h3 class="live-x-rate">0.63</h3>
     </div>
-    <div class="live-rate">
+    <div class="live-rate new">
         <img class="flag hidden" src="img/gbp.svg" alt="flag">
         <h2 value="GBP">GBP</h2>
         <h3 class="live-x-rate">0.63</h3>
     </div>
-    <div class="live-rate">
+    <div class="live-rate new">
         <img class="flag hidden" src="img/jpy.svg" alt="flag">
         <h2 value="JPY">JPY</h2>
         <h3 class="live-x-rate">0.63</h3>
     </div>
-    <div class="live-rate">
+    <div class="live-rate new">
         <img class="flag hidden" src="img/inr.svg" alt="flag">
         <h2 value="INR">INR</h2>
         <h3 class="live-x-rate">0.63</h3>
@@ -124,6 +123,8 @@ function newCurrencyRow() {
     //display proper rates according to selected currency -------- incomplete
 
 }
+
+
 
 function deleteNewCurrencyRow(e) {
     if (e.target.classList.contains('delete-btn')) {
