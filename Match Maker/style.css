@@ -53,7 +53,6 @@ input[type="number"]{
 
 #loading-container h1 {
     font-size: 50px;
-    
 }
 
 /* ----------- Results Container--------------*/
@@ -114,9 +113,7 @@ input[type="number"]{
     width: 50%;
 }
 
-
 /* Modal buttons toggle */
-
 .modal-buttons-start {
     display: block;
 }
@@ -124,7 +121,6 @@ input[type="number"]{
 .modal-buttons-last {
     display: none;
 }
-
 
 /* Footer */
 

@@ -54,8 +54,6 @@ function clearSearch() {
     countryInpt.value = "";
 }
 
-
-
 //Correct buttons being display in modal
 
 function correctModalButtons(container, buttonShow, buttonHide) {
@@ -177,7 +175,6 @@ function showResultsContainer(arr) {
         modalHeading.textContent = "Success!";
         modalText.innerHTML = `Your match has been notified! Get ready for some sexy time tonight! <i class="far fa-laugh-wink"></i>`;
 
-
     });
 
     //Dislike button
@@ -270,13 +267,3 @@ modalQuit.addEventListener('click', function () {
     homeBtn.click();
     console.log('modal quit button pressed');
 })
-
-/*
-
- - Complete styling
-
- Responsiveness
-
-
-
-*/
