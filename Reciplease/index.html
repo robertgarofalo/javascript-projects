@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reciplease - The world's best recipe finder</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="container">
+        <header>
+            <h1>Reciplease</h1>
+            <p>Find a recipe you'll love</p>
+            <div id="overlay"></div>
+            <div class="flex">
+                <form class="flex" id="submit">
+                    <input id="search" type="text" placeholder="Search for meals or keywords">
+                    <button class="search-btn" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+                <button class="random-btn" id="random">
+                    <i class="fa fa-random"></i>
+                </button>
+            </div>
+            <button id="scroll-top" class="scroll-btn"><i class="fa fa-chevron-up"></i></button>
+        </header>
+
+    </div>
+
+    <div class="container">
+        <div id="result-heading"></div>
+        <div id="meals" class="meals"></div>
+        <div id="single-meal"></div>
+    </div>
+
+    <script src="script.js" async defer></script>
+</body>
+
+</html>
