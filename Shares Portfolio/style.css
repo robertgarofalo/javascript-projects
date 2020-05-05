@@ -1,0 +1,223 @@
+
+/*
+
+dashboard style examples
+
+https://www.geckoboard.com/product/data-sources/facebook/
+
+colors: outside - #16113a
+        inside -  #272953
+
+        ======================
+
+https://dribbble.com/shots/6921546-Dashboard-and-Table-design/attachments
+
+*/
+
+:root {
+    --text-color: #fff;
+    --body-bg: #16113a;
+    --inside-container-bg: #272953; 
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 auto;
+    background-color: var(--body-bg);
+    font-family: 'Lato', sans-serif;
+}
+
+.main-container {
+    margin: 10px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+    "profit-loss pie-chart date"
+    "table table table";
+}
+
+/*---------------- PROFIT LOSS CONTAINER ---------------*/
+
+.profit-loss-container {
+    border-radius: 5px;
+    grid-area: profit-loss;
+    background-color: var(--inside-container-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    color: var(--text-color);
+    font-size: 50px;
+    padding: 0 40px;
+}
+
+.currency {
+    font-size: 14px;
+}
+
+.total-profit-loss  {
+    font-size: 20px;
+}
+
+.total-usd.positive, .total-aud.positive {
+    color: green;
+}
+
+.total-usd.negative, .total-aud.negative {
+    color: red;
+}
+
+
+/*---------------- PIE CHART CONTAINER ---------------*/
+
+.pie-chart-container {
+    background-color: var(--inside-container-bg);
+    border-radius: 5px;
+    padding-top: 30px;
+}
+
+#text-hider {
+    position: relative;
+    background-color: var(--inside-container-bg);
+    bottom: 12px;
+    height: 10px;
+}
+
+/*---------------- DATE TIME WEATHER CONTAINER ---------------*/
+
+
+.date-time-weather-container {
+    border-radius: 5px;
+    color: var(--text-color);
+    background-color: var(--inside-container-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.date-time-weather-container > div {
+    margin: 10px 0;
+}
+
+.day {
+    font-size: 30px;
+    margin-bottom: -5px !important;
+}
+
+.date {
+    font-size: 30px;
+}
+
+.time {
+    font-size: 80px;
+}
+
+.weather-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+font-size: 22px;
+}
+
+.city {
+    margin-bottom: 10px;
+    font-size: 18px !important;
+}
+
+/*---------------- STOCKS TABLE CONTAINER ---------------*/
+
+.stocks-container {
+    border-radius: 5px;
+    grid-area: table;
+    background-color: var(--inside-container-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;     
+    
+}
+
+.stocks-table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.stocks-table {
+    width: 100%;
+    color: var(--text-color);
+    text-align: center;
+    border-collapse: collapse;
+    border-radius: 50px;
+}
+
+.stocks-table tr.row-style {
+    height: 50px;
+    /* background-color: lightgrey; */
+}
+
+.stocks-table th {
+    background-color: var(--body-bg);
+    height: 50px;
+}
+
+
+.add-button {
+    margin: 30px 0;
+    width: 100px;
+    height: 40px;
+    background-color: rgb(64, 110, 238);
+    color: var(--text-color);
+    border: 1px solid var(--body-bg);
+    border-radius: 3px;
+    cursor: pointer;
+    
+}
+
+.add-new-screen {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: lightsalmon;
+}
+
+.add-new-screen form {
+    width: 200px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 400px;
+    margin: auto;
+}
+
+form input {
+    margin: 15px 0;
+}
+
+.edit-button {
+    cursor: pointer;
+}
+
+.delete-button {
+    cursor: pointer;
+}
+
+
+

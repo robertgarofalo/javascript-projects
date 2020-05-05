@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Share Portfolio</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Profit loss  -->
+        <div class="profit-loss-container">
+            <div id="total-usd" class="total-usd">$0<span class="currency"> USD</span></div>
+            <div id="total-aud" class="total-aud">$0<span class="currency"> AUD</span></div>
+            <div class="total-profit-loss">Total Profit & Loss</div>
+        </div>
+
+        <!-- Pie chart -->
+        <div class="pie-chart-container">
+            <div id="chartContainer" style="height: 370px; width: 100%;">
+            </div>
+            <div id="text-hider"></div>
+
+        </div>
+
+
+        <!-- Date time  -->
+        <div class="date-time-weather-container">
+            <div id="day" class="day"></div>
+            <div id="date" class="date">unknown</div>
+            <div id="current-time" class="time">13:02:00</div>
+
+            <!-- Weather -->
+            <div class="weather-container">
+                <div class="city"></div>
+                <div class="temperature-degree">15<span> &#176C </span></div>
+                <div class="description"></div>
+            </div>
+        </div>
+
+        <!-- Stocks Table  -->
+        <div class="stocks-container">
+            <div class="stocks-table-container">
+
+                <button type="button" id="add-new-screen-btn" class="add-button">Add stock <i
+                        class="fa fa-plus"></i></button>
+
+                <div id="add-new-screen" class="add-new-screen">
+                    <form>
+                        <input id="ticker-code" type="text" placeholder="Ticker Code">
+                        <input id="stock-name" type="text" placeholder="Stock Name">
+                        <input id="number-of-units" type="number" placeholder="NO of Units">
+                        <input id="purchase-price" type="number" placeholder="Purchase Price">
+                        <span class="buttons">
+                            <button type="button" id="add-new-stock-button">Add</button>
+                            <button type="button" id="close-add-screen-btn">Close</button>
+                        </span>
+                    </form>
+                </div>
+
+
+                <table id="table" class="stocks-table">
+                    <tr id="header-row">
+                        <th>Ticker</th>
+                        <th>Stock Name</th>
+                        <th>No Of Units</th>
+                        <th>Purchase Price</th>
+                        <th>Current Price</th>
+                        <th>Current Gain/Loss</th>
+                        <th>Previous Day Close</th>
+                        <th>Previous day Gain/Loss</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- https://www.freecodecamp.org/forum/t/doing-calculations-in-an-html-table/326783/6 -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
