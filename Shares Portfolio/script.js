@@ -1,10 +1,14 @@
+//TO DO
+
+// save data to local storage
 
 // https://finnhub.io/docs/api
 // https://canvasjs.com/docs/charts/chart-options/colorset/
 
 //GLOBAL VARIABLES
 
-const apiKey = 'bqjufkvrh5r9t8htdhkg'
+const apiKey = 'bqr8dnvrh5rabvm5pdtg';
+
 const table = document.getElementById('table');
 const addNewScreenButton = document.getElementById('add-new-screen-btn');
 const closeAddScreenButton = document.getElementById('close-add-screen-btn');
@@ -18,12 +22,18 @@ const tickerCodeInput = document.getElementById('ticker-code');
 const stockNameInput = document.getElementById('stock-name');
 const noOfUnitsInput = document.getElementById('number-of-units');
 const purchasedAtInput = document.getElementById('purchase-price');
+const message = document.getElementById('error-message');
 
 const usdTotal = document.getElementById('total-usd');
 const audTotal = document.getElementById('total-aud');
 
+const proxy = 'https://cors-anywhere.herokuapp.com/';
+
 // Stocks Arr - used to map through so promise.all can function
 let stocksArr = [];
+
+// Ticker code authentication on windows.load
+let tickerArr = [];
 
 // Fetch data function
 function fetchData(stockObject) {
@@ -49,8 +59,8 @@ function fetchData(stockObject) {
 };
 
 function addDataToDom(data, stockObject) {
-    console.log('stockobject ', stockObject);
-    console.log('data ', data);
+    // console.log('stockobject ', stockObject);
+    // console.log('data ', data);
     let allTrs = table.querySelectorAll('tr');
 
     allTrs.forEach(tr => {
@@ -64,7 +74,7 @@ function addDataToDom(data, stockObject) {
         let tr = document.createElement('tr');
         tr.classList.add('row-style');
         tr.innerHTML = `
-                    <td class="ticker">${stocksArr[i].ticker}</td>
+                    <td class="ticker" data-id=${stocksArr[i].id}>${stocksArr[i].ticker}</td>
                     <td class="stock-name">${stocksArr[i].name}</td>
                     <td class="no-of-units">${stocksArr[i].noOfUnits}</td>
                     <td class="purchase-price">$${stocksArr[i].purchasedAt}</td>                  
@@ -72,9 +82,11 @@ function addDataToDom(data, stockObject) {
                     <td class="current-gain-loss">$${((stocksArr[i].noOfUnits * stock.c) - (stocksArr[i].noOfUnits * stocksArr[i].purchasedAt)).toFixed(2)}</td> 
                     <td class="previous-day-close">$${stock.pc}</td>
                     <td class="previous-gain-loss">$${((stocksArr[i].noOfUnits * stock.pc) - (stocksArr[i].noOfUnits * stocksArr[i].purchasedAt)).toFixed(2)}</td> 
-                    <td><i class="edit-button fa fa-pencil"></i></td>              
-                    <td><i class="delete-button fa fa-trash"></i></td>              
+                                 
+                    <td><i class="delete-button fa fa-trash fa-1.5x"></i></td>              
                     `;
+
+        // <td><i class="edit-button fa fa-pencil"></i></td> 
         table.appendChild(tr);
 
     })
@@ -125,45 +137,12 @@ function addCurrentProfitLoss() {
 //Convert USD rate to AUD
 function convertUSDtoAUD(usdTotal) {
 
-
-
-    fetch(`https://api.exchangerate-api.com/v4/latest/usd`)
+    fetch(`${proxy}https://api.exchangerate-api.com/v4/latest/usd`)
         .then(res => res.json())
         .then(data => {
             const audAmount = data.rates['AUD'] * usdTotal;
             audTotal.innerHTML = `$${audAmount.toFixed(2)}<span class="currency"> AUD</span>`
         });
-}
-
-// PIE CHART
-
-window.onload = function () {
-
-    var chart = new CanvasJS.Chart("chartContainer", {
-        interactivityEnabled: false,
-        backgroundColor: "#272953",
-        animationEnabled: false,
-        title: {
-            text: "Portfolio",
-            fontColor: "#fff",
-            fontFamily: "tahoma"
-        },
-        data: [{
-            type: "pie",
-            startAngle: 240,
-            yValueFormatString: "##0.00\"%\"",
-            indexLabel: "{label} {y}",
-            dataPoints: [
-                { y: 79.45, label: "Google", indexLabelFontColor: "#fff" },
-                { y: 7.31, label: "Tesla", indexLabelFontColor: "#fff" },
-                { y: 7.06, label: "Apple", indexLabelFontColor: "#fff" },
-                { y: 4.91, label: "Uber", indexLabelFontColor: "#fff" },
-                { y: 1.26, label: "Verizon", indexLabelFontColor: "#fff" },
-                { y: 1.26, label: "Microsoft", indexLabelFontColor: "#fff" }
-            ]
-        }]
-    });
-    chart.render();
 }
 
 // Constantly get current date and time
@@ -263,29 +242,34 @@ window.addEventListener('load', () => {
             const proxy = 'https://cors-anywhere.herokuapp.com/';
             const api = `${proxy}https://api.darksky.net/forecast/b3e4dd9c89d69551b401216516ef1675/${lat},${long}`;
 
-            console.log('lat ', lat)
-            console.log(long)
-
             //fetch data and then save to json
             fetch(api)
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
-                    const { temperature, summary } = data.currently;
+
+                    const { temperature, summary, icon } = data.currently;
                     const { timezone } = data;
                     let celsius = Math.floor((temperature - 32) * (5 / 9));
 
                     temperatureDegree.innerHTML = `${celsius}<span> &#176C </span>`;
                     tempDescription.textContent = summary;
                     location.textContent = timezone;
-                    // CELSIUS FORMULA                   
 
+                    //set icon
+                    setIcons(icon, document.querySelector('.icon'));
 
                 });
 
         });
+    }
+
+    function setIcons(icon, iconID) {
+        const skycons = new Skycons({ color: "white" })
+        const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+        skycons.play();
+        return skycons.set(iconID, Skycons[currentIcon]);
     }
 
 });
@@ -300,12 +284,22 @@ function addNewScreenOpen() {
     addNewScreen.style.display = "block";
 }
 
+let num = 0;
+function addToId() {
+    num++;
+    let id = num;
+    return id.toString();
+}
+
+// Add new stock to Portfolio
 function createFetchData() {
 
     //that string's data is then extracted
     let tickerCode = tickerCodeInput.value.trim().toUpperCase();
+    // message.style.visibility = "hidden";
 
     let stockObject = {
+        id: addToId(),
         ticker: tickerCodeInput.value.toUpperCase(),
         name: stockNameInput.value.toUpperCase(),
         noOfUnits: +noOfUnitsInput.value,
@@ -314,6 +308,7 @@ function createFetchData() {
     }
 
     stocksArr.push(stockObject);
+    addStockToPieChart(stockObject["ticker"], stockObject["name"], stockObject["noOfUnits"], stockObject["purchasedAt"], stockObject["id"]);
     fetchData(stockObject);
 
     // Reset input values
@@ -323,24 +318,110 @@ function createFetchData() {
     purchasedAtInput.value = "";
 
     closeAddScreen();
+
+}
+
+// PIE CHART
+
+let chart = new CanvasJS.Chart("chartContainer", {
+    interactivityEnabled: false,
+    backgroundColor: "#272953",
+    animationEnabled: false,
+    title: {
+        text: "Portfolio",
+        fontColor: "#fff",
+        fontFamily: "tahoma"
+    },
+    data: [{
+        type: "pie",
+        startAngle: 240,
+        yValueFormatString: "##0\"%\"",
+        indexLabel: "{label} {y}",
+        dataPoints: [
+            // { y: 33.33333333333333, label: "COKE", indexLabelFontColor: "#fff", noOfUnits: 5, ticker: "KO" },
+        ]
+    }]
+});
+
+
+// PIE CHART
+//Load
+window.onload = loadPieChart();
+
+function loadPieChart() {
+    chart.render();
+}
+
+let totalUnits = 0;
+let dataPoints = chart.data[0].dataPoints;
+
+//ADD TO PIE CHART
+function addStockToPieChart(ticker, name, noOfUnits, purchasedAt, id) {
+
+    // - calculate correct amount of total shares and 
+    totalAmount = 0;
+    stocksArr.forEach(stock => {
+        totalAmount += stock.noOfUnits * stock.purchasedAt;
+    })
+
+    // work out percentage for stocks already added to dataPoints
+    dataPoints.forEach(stock => {
+        stock.y = ((stock.noOfUnits * stock.purchasedAt) / totalAmount) * 100;
+    })
+
+    let currentStockPercentage = (noOfUnits * purchasedAt) / totalAmount * 100;
+    dataPoints.push({ y: currentStockPercentage, label: name, indexLabelFontColor: "#fff", noOfUnits: noOfUnits, ticker: ticker, purchasedAt: +purchasedAt, id: id })
+
+    loadPieChart()
+}
+
+
+//REMOVE FROM PIE CHART
+function removeStockFromPieChart(e) {
+    let currentRow = e.target.parentNode.parentNode;
+    //filter through current dataPoints that aren't == to e.target and save to newArr
+    let newArr = dataPoints.filter(stock => currentRow.childNodes[1].dataset.id !== stock['id'])
+
+    // loop through and delete all data in  chart[0].data.dataPoints
+    let length = dataPoints.length;
+    for (let i = 0; i < length + 1; i++) {
+        dataPoints.pop();
+    }
+
+    console.log('current length of datapoints ', dataPoints.length);
+
+    //calculate current percentages of each by looping through newArr and push to dataPoints
+    //total units
+    totalUnits = 0;
+    newArr.forEach(stock => {
+        totalUnits += stock.noOfUnits;
+    })
+
+    //update y each stock object
+    newArr.forEach(stock => {
+        stock.y = (stock.noOfUnits / totalUnits) * 100;
+
+        //push to dataPoints
+        dataPoints.push(stock);
+    })
+
+    loadPieChart();
 }
 
 function deleteStock(e) {
     //remove the stock row in the DOM
     let currentRow = e.target.parentNode.parentNode;
-    currentRow.remove();
-    // console.log(currentRow);
-    // console.log('text ', currentRow.childNodes[1].textContent);
+    //remove from stocksArr
+    stocksArr = stocksArr.filter(stock => currentRow.childNodes[1].dataset.id !== stock['id']); //done
 
-    stocksArr.forEach(stock => {
-        if (currentRow.childNodes[1].textContent === stock['ticker']) {
-            stocksArr.pop(stock);
-        }
-    })
+    // remove selected row
+    currentRow.remove(); //done
 
+    //Update profit and loss
     addCurrentProfitLoss()
 
 }
+
 
 //EVENT LISTENERS
 closeAddScreenButton.addEventListener('click', closeAddScreen);
@@ -350,15 +431,7 @@ addNewStockButton.addEventListener('click', createFetchData);
 document.addEventListener('click', function (e) {
     if (e.target && e.target.classList.contains('delete-button')) {
         deleteStock(e);
+        removeStockFromPieChart(e);
     }
 
 })
-
-
-// FUNCTIONALITY TO DO
-// save data to local storage
-// add total gain/loss column cells  
-
-
-// NOTES
-//stock propogation - refer to document.addeventlistener 
